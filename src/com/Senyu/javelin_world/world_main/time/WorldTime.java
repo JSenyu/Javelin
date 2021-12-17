@@ -25,22 +25,13 @@ public class WorldTime {
     }
 
     static void readFile(File file){
-        long i;
-        long is = 0;
         StringBuffer buffer = new StringBuffer();
         try {
             BufferedReader bufferedReader =
                     new BufferedReader(new FileReader(file));
-            char[] chars = bufferedReader.readLine().toCharArray();
-            for (int j = 0 ; j < chars.length ; j ++){
-                i = chars[j] - 48;
-                for (int k = 0 ; k < chars.length - j -1 ; k ++){
-                    i = i * 10;
-                }
-                is = is + i;
-            }
-            System.out.println("Setup time is " + is);
-            dataTime = is;
+            String s = bufferedReader.readLine();
+            Integer i = new Integer(s);
+            dataTime = i;
             bufferedReader.close();
         }catch (Exception e){
             e.printStackTrace();
@@ -54,7 +45,6 @@ public class WorldTime {
             BufferedWriter bufferedWriter =
                         new BufferedWriter(new FileWriter(file));
             bufferedWriter.write(s);
-            System.out.println("Writer time is " + s);
             bufferedWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -94,13 +84,13 @@ class WorldTimeUtil implements Runnable {
         WorldTime.readFile(WorldTime.file);
 //        WorldTime.readFile(WorldTime.yearFile);
         while (true){
-            if (WorldTime.getDataTime() == 31536000L){
+            if (WorldTime.getDataTime() == 31536L){
                 WorldTime.setDataTime(0);
                 WorldTime.setDataTime(WorldTime.getDataTime(1) + 1, 1);
                 WorldTime.writeFile(WorldTime.yearFile);
             }
             try {
-                Thread.sleep(100);
+                Thread.sleep(1000);
                 WorldTime.setDataTime(WorldTime.getDataTime() + 1);
                 WorldTime.writeFile(WorldTime.file);
             } catch (InterruptedException e) {

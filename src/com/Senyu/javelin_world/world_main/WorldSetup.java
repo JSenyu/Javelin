@@ -12,12 +12,14 @@ public class WorldSetup {
 
     public static void setup(){
         WorldTime.timeSetup();
-
     }
 
     public static void command(){
         Scanner scanner = new Scanner(System.in);
         String com = scanner.nextLine();
+        if (com.equals("time")){
+            System.out.println(WorldTime.getDataTime());
+        }
 
     }
 
